@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{userDetails.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{userDetails.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/userDetailss/add}" th:text="#{userDetails.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${userDetailses.empty}" th:text="#{userDetails.list.empty}" />
+            <div th:if="${!userDetailses.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{userDetails.id.label}" scope="col" />
+                            <th th:text="#{userDetails.name.label}" scope="col" />
+                            <th th:text="#{userDetails.email.label}" scope="col" />
+                            <th th:text="#{userDetails.department.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="userDetails : ${userDetailses}">
+                            <td th:text="${userDetails.id}" />
+                            <td th:text="${userDetails.name}" />
+                            <td th:text="${userDetails.email}" />
+                            <td th:text="${userDetails.department}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/userDetailss/edit/{id}(id=${userDetails.id})}" th:text="#{userDetails.list.edit}" class="btn btn-sm btn-secondary" />
+                                    <form th:action="@{/userDetailss/delete/{id}(id=${userDetails.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{userDetails.list.delete}" type="submit" class="btn btn-sm btn-secondary" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
